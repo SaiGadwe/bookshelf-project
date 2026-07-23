@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookShelf</title>
+</head>
+<body>
+    <h1>📚 BookShelf</h1>
+
+    {% if books %}
+        <ul>
+            {% for book in books %}
+                <li>
+                    <strong>{{ book.title }}</strong> by {{ book.author }}
+                    {% if book.description %}
+                        <p>{{ book.description }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books added yet.</p>
+    {% endif %}
+</body>
+</html>
