@@ -14,4 +14,4 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-
+More features (models, auth, templates) coming soon.
