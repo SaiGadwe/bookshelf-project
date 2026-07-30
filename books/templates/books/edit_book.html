@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'books/style.css' %}">
 </head>
 <body>
+    {% include 'books/navbar.html' %}
     <h1>✏️ Edit "{{ book.title }}"</h1>
 
     <form method="post">
@@ -14,7 +15,5 @@
         {{ form.as_p }}
         <button type="submit">Save Changes</button>
     </form>
-
-    <p><a href="{% url 'book_list' %}">Back to book list</a></p>
 </body>
 </html>

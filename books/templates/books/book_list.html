@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="{% static 'books/style.css' %}">
 </head>
 <body>
+    {% include 'books/navbar.html' %}
     <h1>📚 BookShelf</h1>
-    <p>Welcome, {{ request.user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
-    <p><a href="{% url 'add_book' %}">+ Add a new book</a></p>
 
     {% if books %}
         <ul>
