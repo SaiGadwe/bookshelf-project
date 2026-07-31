@@ -14,10 +14,8 @@
         <ul>
             {% for book in books %}
                 <li>
-                    <strong>{{ book.title }}</strong> by {{ book.author }}
-                    {% if book.description %}
-                        <p>{{ book.description }}</p>
-                    {% endif %}
+                    <strong><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></strong> by {{ book.author }}
+                    <p>{{ book.get_genre_display }}</p>
                     <a href="{% url 'edit_book' book.pk %}">Edit</a> |
                     <a href="{% url 'delete_book' book.pk %}">Delete</a>
                 </li>

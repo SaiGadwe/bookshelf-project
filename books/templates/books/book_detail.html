@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ book.title }} - BookShelf</title>
+    <link rel="stylesheet" href="{% static 'books/style.css' %}">
+</head>
+<body>
+    {% include 'books/navbar.html' %}
+    <h1>{{ book.title }}</h1>
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Genre:</strong> {{ book.get_genre_display }}</p>
+    <p><strong>Added on:</strong> {{ book.added_on|date:"F j, Y" }}</p>
+    {% if book.description %}
+        <p>{{ book.description }}</p>
+    {% endif %}
+
+    <a href="{% url 'edit_book' book.pk %}">Edit</a> |
+    <a href="{% url 'delete_book' book.pk %}">Delete</a> |
+    <a href="{% url 'book_list' %}">Back to list</a>
+</body>
+</html>
