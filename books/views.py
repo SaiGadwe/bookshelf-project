@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,22 @@ from .forms import BookForm
 @login_required
 def book_list(request):
     books = Book.objects.all().order_by('-added_on')
-    return render(request, 'books/book_list.html', {'books': books})
+
+    query = request.GET.get('q', '').strip()
+    if query:
+        books = books.filter(Q(title__icontains=query) | Q(author__icontains=query))
+
+    genre = request.GET.get('genre', '')
+    if genre:
+        books = books.filter(genre=genre)
+
+    context = {
+        'books': books,
+        'query': query,
+        'selected_genre': genre,
+        'genre_choices': Book.GENRE_CHOICES,
+    }
+    return render(request, 'books/book_list.html', context)
 
 
 @login_required
