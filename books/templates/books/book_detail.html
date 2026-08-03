@@ -8,6 +8,9 @@
 </head>
 <body>
     {% include 'books/navbar.html' %}
+    {% if book.cover %}
+        <img src="{{ book.cover.url }}" alt="{{ book.title }} cover" style="max-width: 200px; border-radius: 8px;">
+    {% endif %}
     <h1>{{ book.title }}</h1>
     <p><strong>Author:</strong> {{ book.author }}</p>
     <p><strong>Genre:</strong> {{ book.get_genre_display }}</p>

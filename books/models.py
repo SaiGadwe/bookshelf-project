@@ -17,6 +17,7 @@ class Book(models.Model):
     author = models.CharField(max_length=150)
     description = models.TextField(blank=True)
     genre = models.CharField(max_length=20, choices=GENRE_CHOICES, default='other')
+    cover = models.ImageField(upload_to='covers/', blank=True, null=True)
     added_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
