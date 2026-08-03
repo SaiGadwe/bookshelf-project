@@ -18,8 +18,12 @@
                 <option value="{{ value }}" {% if value == selected_genre %}selected{% endif %}>{{ label }}</option>
             {% endfor %}
         </select>
+        <label>
+            <input type="checkbox" name="mine" value="1" {% if mine_only %}checked{% endif %}>
+            My books only
+        </label>
         <button type="submit">Search</button>
-        {% if query or selected_genre %}
+        {% if query or selected_genre or mine_only %}
             <a href="{% url 'book_list' %}">Clear</a>
         {% endif %}
     </form>
@@ -29,7 +33,7 @@
             {% for book in books %}
                 <li>
                     <strong><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></strong> by {{ book.author }}
-                    <p>{{ book.get_genre_display }}</p>
+                    <p>{{ book.get_genre_display }}{% if book.added_by %} · added by {{ book.added_by.username }}{% endif %}</p>
                     <a href="{% url 'edit_book' book.pk %}">Edit</a> |
                     <a href="{% url 'delete_book' book.pk %}">Delete</a>
                 </li>

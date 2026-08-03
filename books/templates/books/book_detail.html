@@ -14,6 +14,9 @@
     <h1>{{ book.title }}</h1>
     <p><strong>Author:</strong> {{ book.author }}</p>
     <p><strong>Genre:</strong> {{ book.get_genre_display }}</p>
+    {% if book.added_by %}
+        <p><strong>Added by:</strong> {{ book.added_by.username }}</p>
+    {% endif %}
     <p><strong>Added on:</strong> {{ book.added_on|date:"F j, Y" }}</p>
     {% if book.description %}
         <p>{{ book.description }}</p>

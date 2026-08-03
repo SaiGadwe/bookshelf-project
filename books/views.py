@@ -19,11 +19,16 @@ def book_list(request):
     if genre:
         books = books.filter(genre=genre)
 
+    mine_only = request.GET.get('mine') == '1'
+    if mine_only:
+        books = books.filter(added_by=request.user)
+
     context = {
         'books': books,
         'query': query,
         'selected_genre': genre,
         'genre_choices': Book.GENRE_CHOICES,
+        'mine_only': mine_only,
     }
     return render(request, 'books/book_list.html', context)
 
@@ -37,9 +42,11 @@ def book_detail(request, pk):
 @login_required
 def add_book(request):
     if request.method == 'POST':
-        form = BookForm(request.POST)
+        form = BookForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            book = form.save(commit=False)
+            book.added_by = request.user
+            book.save()
             return redirect('book_list')
     else:
         form = BookForm()
@@ -50,7 +57,7 @@ def add_book(request):
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
             return redirect('book_list')

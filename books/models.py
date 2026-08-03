@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -18,6 +19,13 @@ class Book(models.Model):
     description = models.TextField(blank=True)
     genre = models.CharField(max_length=20, choices=GENRE_CHOICES, default='other')
     cover = models.ImageField(upload_to='covers/', blank=True, null=True)
+    added_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='books',
+        null=True,
+        blank=True,
+    )
     added_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
