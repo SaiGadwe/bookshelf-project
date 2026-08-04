@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout, login
@@ -23,8 +24,12 @@ def book_list(request):
     if mine_only:
         books = books.filter(added_by=request.user)
 
+    paginator = Paginator(books, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'books': books,
+        'page_obj': page_obj,
         'query': query,
         'selected_genre': genre,
         'genre_choices': Book.GENRE_CHOICES,

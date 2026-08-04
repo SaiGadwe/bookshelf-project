@@ -84,6 +84,15 @@ li p {
     color: #555;
 }
 
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid #e0d9c8;
+}
+
 form p {
     margin-bottom: 12px;
 }
