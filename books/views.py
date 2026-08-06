@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
@@ -10,7 +10,8 @@ from .forms import BookForm
 
 @login_required
 def book_list(request):
-    books = Book.objects.all().order_by('-added_on')
+    all_books = Book.objects.all()
+    books = all_books.order_by('-added_on')
 
     query = request.GET.get('q', '').strip()
     if query:
@@ -28,12 +29,23 @@ def book_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    genre_counts = (
+        all_books.values('genre').annotate(count=Count('id')).order_by('-count')
+    )
+    genre_label_map = dict(Book.GENRE_CHOICES)
+    genre_stats = [
+        {'label': genre_label_map.get(g['genre'], g['genre']), 'count': g['count']}
+        for g in genre_counts
+    ]
+
     context = {
         'page_obj': page_obj,
         'query': query,
         'selected_genre': genre,
         'genre_choices': Book.GENRE_CHOICES,
         'mine_only': mine_only,
+        'total_books': all_books.count(),
+        'genre_stats': genre_stats,
     }
     return render(request, 'books/book_list.html', context)
 

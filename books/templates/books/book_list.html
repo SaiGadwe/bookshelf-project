@@ -10,6 +10,13 @@
     {% include 'books/navbar.html' %}
     <h1>📚 BookShelf</h1>
 
+    <div class="stats-bar">
+        <strong>{{ total_books }}</strong> book{{ total_books|pluralize }} total
+        {% for stat in genre_stats %}
+            · {{ stat.label }}: {{ stat.count }}
+        {% endfor %}
+    </div>
+
     <form method="get" class="search-form">
         <input type="text" name="q" placeholder="Search by title or author" value="{{ query }}">
         <select name="genre">
