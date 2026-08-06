@@ -70,6 +70,20 @@ a:hover {
     border-radius: 4px;
 }
 
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background: #ffffff;
+    border: 1px dashed #cbb994;
+    border-radius: 8px;
+}
+
+.empty-state a {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
 ul {
     list-style: none;
     padding: 0;

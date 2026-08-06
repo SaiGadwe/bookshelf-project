@@ -43,7 +43,7 @@ ROOT_URLCONF = 'bookshelf_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'books' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

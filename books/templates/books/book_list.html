@@ -59,7 +59,14 @@
             {% endif %}
         </div>
     {% else %}
-        <p>No books found.</p>
+        {% if total_books == 0 %}
+            <div class="empty-state">
+                <p>Your shelf is empty. Time to add your first book!</p>
+                <a href="{% url 'add_book' %}">+ Add a book</a>
+            </div>
+        {% else %}
+            <p>No books match your search. <a href="{% url 'book_list' %}">Clear filters</a></p>
+        {% endif %}
     {% endif %}
 </body>
 </html>
