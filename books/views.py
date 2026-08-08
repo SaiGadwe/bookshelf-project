@@ -54,7 +54,8 @@ def book_list(request):
 @login_required
 def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
-    return render(request, 'books/book_detail.html', {'book': book})
+    is_owner = book.added_by_id == request.user.id
+    return render(request, 'books/book_detail.html', {'book': book, 'is_owner': is_owner})
 
 
 @login_required
@@ -75,6 +76,9 @@ def add_book(request):
 @login_required
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
+    if book.added_by_id != request.user.id:
+        messages.error(request, "You can only edit books you added.")
+        return redirect('book_detail', pk=book.pk)
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
@@ -89,6 +93,9 @@ def edit_book(request, pk):
 @login_required
 def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
+    if book.added_by_id != request.user.id:
+        messages.error(request, "You can only delete books you added.")
+        return redirect('book_detail', pk=book.pk)
     if request.method == 'POST':
         title = book.title
         book.delete()

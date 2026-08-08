@@ -22,8 +22,10 @@
         <p>{{ book.description }}</p>
     {% endif %}
 
-    <a href="{% url 'edit_book' book.pk %}">Edit</a> |
-    <a href="{% url 'delete_book' book.pk %}">Delete</a> |
+    {% if is_owner %}
+        <a href="{% url 'edit_book' book.pk %}">Edit</a> |
+        <a href="{% url 'delete_book' book.pk %}">Delete</a> |
+    {% endif %}
     <a href="{% url 'book_list' %}">Back to list</a>
 </body>
 </html>
