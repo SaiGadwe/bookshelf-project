@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q, Count
 from django.shortcuts import render, redirect, get_object_or_404
@@ -64,6 +65,7 @@ def add_book(request):
             book = form.save(commit=False)
             book.added_by = request.user
             book.save()
+            messages.success(request, f'"{book.title}" was added to your shelf.')
             return redirect('book_list')
     else:
         form = BookForm()
@@ -77,6 +79,7 @@ def edit_book(request, pk):
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
+            messages.success(request, f'"{book.title}" was updated.')
             return redirect('book_list')
     else:
         form = BookForm(instance=book)
@@ -87,7 +90,9 @@ def edit_book(request, pk):
 def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
+        title = book.title
         book.delete()
+        messages.success(request, f'"{title}" was removed from your shelf.')
         return redirect('book_list')
     return render(request, 'books/delete_book.html', {'book': book})
 
@@ -98,6 +103,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, f'Welcome, {user.username}! Your account was created.')
             return redirect('book_list')
     else:
         form = UserCreationForm()
@@ -106,4 +112,5 @@ def register_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.info(request, 'You have been logged out.')
     return redirect('login')

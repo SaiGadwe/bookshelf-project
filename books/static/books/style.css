@@ -25,6 +25,37 @@ hr {
     margin-bottom: 20px;
 }
 
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 16px;
+}
+
+.message {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.message-success {
+    background: #dff3e3;
+    color: #1e5f2e;
+    border: 1px solid #b7e0c1;
+}
+
+.message-info {
+    background: #e2eef7;
+    color: #2b567d;
+    border: 1px solid #b9d7ec;
+}
+
+.message-error {
+    background: #f8d9d9;
+    color: #7d2b2b;
+    border: 1px solid #eab9b9;
+}
+
 h1 {
     color: #4a3f35;
     padding-bottom: 8px;
@@ -84,8 +115,11 @@ a:hover {
     font-weight: 600;
 }
 
-ul {
+ul.messages, ul {
     list-style: none;
+}
+
+ul:not(.messages) {
     padding: 0;
 }
 
